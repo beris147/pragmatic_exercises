@@ -1,6 +1,5 @@
 use dbc;
 use dbc::dbc_panic;
-use std;
 
 trait FoodProcessor {
     fn get_speed(&self) -> i32;
@@ -26,7 +25,8 @@ impl FoodProcessor for Blender {
         return self.speed;
     }
     fn set_speed(&mut self, speed: i32) {
-        dbc::require!(i32::abs(self.get_speed() - speed) == 1 && (self.is_full() || speed == 0));
+        dbc::require!(i32::abs(self.get_speed() - speed) == 1);
+        dbc::require!(self.is_full() || speed == 0);
         self.speed = speed;
         dbc::ensure!(self.get_speed() == speed);
     }
@@ -51,5 +51,4 @@ fn main() {
         full: false,
     };
     blender.fill();
-    blender.set_speed(1);
 }
