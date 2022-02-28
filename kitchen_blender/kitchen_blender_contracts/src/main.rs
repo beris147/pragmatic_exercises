@@ -16,12 +16,12 @@ struct Blender {
 
 #[contracts::invariant(self.speed>=0)]
 #[contracts::invariant(self.speed<10)]
+#[contracts::invariant(self.is_full() || self.speed == 0)]
 impl FoodProcessor for Blender {
     fn get_speed(&self) -> i32 {
         return self.speed;
     }
     #[contracts::requires(i32::abs(self.get_speed() - speed) == 1 )]
-    #[contracts::requires(self.is_full() || speed == 0)]
     #[contracts::ensures(self.get_speed() == speed)]
     fn set_speed(&mut self, speed: i32) {
         self.speed = speed;
